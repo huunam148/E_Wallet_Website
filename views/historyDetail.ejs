@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.98.0">
+  <title>Transaction History</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/stylesheets/mainLayout.css">
+</head>
+
+<body>
+  <header class="p-3 border-bottom position-fixed top-0 w-100" style="background-color: white;">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <img src="https://www.tdtu.edu.vn/sites/www/files/Brand-left-vi-1_0_0.png" height="40">
+      </ul>
+
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+      </form>
+
+      <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="/users/userProfile">Profile</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/users/logout">Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <section class="sidebar flex-column flex-shrink-0 bg-light h-100 p-2" style="width: 280px;">
+
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="/" class="nav-link active ps-3 py-3" aria-current="page">
+              Admin Home
+            </a>
+        </li>
+      <li><a href="/history" class="nav-link link-dark ps-3 py-3">History</a></li>
+      <li><a href="/historyDetail" class="nav-link link-dark ps-3 py-3">History Detail</a></li>
+      <li><a href="#" class="nav-link link-dark ps-3 py-3">Dash Board</a></li>
+      <li><a href="#" class="nav-link link-dark ps-3 py-3">Dash Board</a></li>
+    </ul>
+  </section>
+
+  <div class="main-content p-5 ">
+    <!-- Pass your content here -->
+    <h1>History Detail</h1>
+    <table class="table table-success table-striped">
+        <thead>
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Type</th>
+            <th scope="col">Money</th>
+            <th scope="col">State</th>
+            <th scope="col">Messages</th>
+            <th scope="col">Time</th>
+            <th scope="col">Card Number</th>
+            <th scope="col">Functions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (account.history).forEach(function(history, index) { %>
+            <tr>
+              <th scope="row">
+                <%=index%>
+              </th>
+              <td>
+                <%= history.transactionType%>
+              </td>
+              <td>
+                <%= history.money%>
+              </td>
+              <td>
+                <%= history.state%>
+              </td>
+              <% if ((history.messages).length > 0) { %>
+                <td>
+                  <%= history.messages%>
+                </td>
+              <% } else {%>
+                <td>
+                  Null
+                </td>
+                <% } %> 
+
+              <td>
+                <%= history.transactionTime%>
+              </td>
+
+              <td>
+                <%= history.cardNumber%>
+              </td>
+
+                <td>
+                  <div class="btn-group mb-2"></div>
+                  <% if (history.state == "waiting" ) { %>
+                    <a href="/accept/?historyId=<%= history._id %>&accountId=<%= account._id%>  " class="btn btn-success btn-sm mb-1" data-bs-toggle="modal"
+                      data-bs-target="#accept">Accept</a>
+                    <a href="/decline" class="btn btn-warning btn-sm mb-1" data-bs-toggle="modal"
+                      data-bs-target="#decline">Decline</a>
+                    </div>
+                </td>
+              
+            </tr>
+              <!--Accept Modal -->
+          <div class="modal fade" id="accept" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Are you sure?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <a class="btn btn-danger" role="button" aria-disabled="true"
+                    href="/accept/<%= history._id %>/<%= account._id%>">Accept</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--decline Modal -->
+          <div class="modal fade" id="decline" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Are you sure?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <a class="btn btn-danger" role="button" aria-disabled="true"
+                    href="/decline/<%= history._id %>/<%= account._id%>">Decline</a>
+                </div>
+              </div>
+            </div>
+          </div>
+            <% }}) %>
+
+           
+        </tbody>
+      </table>
+  </div>
+</body>
+</html>

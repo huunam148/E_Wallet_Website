@@ -1,0 +1,25 @@
+<body class="text-center">
+  <main class="form-signin w-100 m-auto" style=" max-width: 400px;padding: 15px;">
+    <form method="post" action="/users/changePass" novalidate class="validated-form">
+      <h1 class="h3 mb-3 fw-normal">Change Password</h1>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="old-password" placeholder="***" required name="oldPassword">
+        <label for="old-password">Old Password</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="password" placeholder="***" required name="newPassword">
+        <label for="password">Password</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="confirm-password" placeholder="***" required name="confirmPassword">
+        <label for="confirm-password">Confirm Password</label>
+      </div>
+
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+    </form>
+  </main>
+
+</body>

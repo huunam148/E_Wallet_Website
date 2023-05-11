@@ -1,0 +1,11 @@
+.sidebar {
+  min-height: calc(100vh - 73px);
+  position: fixed;
+  top: 73px;
+  left: 0px;
+} 
+
+.main-content {
+  margin-left: 280px;
+  margin-top: 73px;
+}
